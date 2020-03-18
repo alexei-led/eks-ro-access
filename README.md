@@ -70,9 +70,11 @@ eksctl create iamidentitymapping --username viewer --group support:viewer --arn 
 
 [AWS guide](https://docs.aws.amazon.com/eks/latest/userguide/create-kubeconfig.html)
 
-Generate/update `kubeconfig` for the EKS clusterm assuming IAM Role (from above) or using AWS credentials for temporary IAM User.
+Generate/update `kubeconfig` for the EKS clusterm assuming IAM Role (from above) or using AWS credentials for temporary IAM User, with the relevant AWS_SECRETS environment variables defined.
 
 ```sh
+AWS_ACCESS_KEY_ID=<KEY>
+AWS_SECRET_ACCESS_KEY=<SECRET>
 aws eks --region <AWS_REGION> update-kubeconfig --name <CLUSTER_NAME>
 ```
 
