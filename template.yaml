@@ -40,7 +40,7 @@ Resources:
           - Sid: EKSAccessCluster
             Effect: Allow
             Action: 
-            - eks:DescribeCluster,
+            - eks:DescribeCluster
             - eks:ListClusters
             Resource:  !Join [ "", ["arn:aws:eks:", !Ref "AWS::Region", ":", !Ref "AWS::AccountId", ":cluster/", !Ref "ClusterName"]]
 Outputs:
