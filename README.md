@@ -10,7 +10,7 @@ In order to access EKS cluster you need AWS IAM credentials. The most secure way
 
 ### Cross-account IAM Role
 
-[![Launch Stack](https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home#/stacks/new?stackName=eks-ro-acccess&templateURL=https://min.gitcdn.link/cdn/doitintl/eks-ro-role/master/template.yaml)
+[![Launch Stack](https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home#/stacks/new?stackName=eks-ro-acccess&templateURL=https://min.gitcdn.link/cdn/alexei-led/eks-ro-access/master/template.yaml)
 
 CloudFormation [template](./template.yaml) for read-only access to an EKS cluster.
 
