@@ -8,6 +8,14 @@ Sometimes you need to access customer-managed EKS cluster with public endpoint. 
 
 In order to access EKS cluster you need AWS IAM credentials. The most secure way is to define a cross AWS account role and assume this role.
 
+### Cross-account IAM Role
+
+[![Launch Stack](https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home#/stacks/new?stackName=eks-ro-acccess&templateURL=https://min.gitcdn.link/cdn/doitintl/eks-ro-access/master/template.yaml)
+
+CloudFormation [template](./template.yaml) for read-only access to an EKS cluster.
+
+### Using temporary IAM User
+
 Another, less secure option, is to create a temporary IAM User in customer AWS account.
 
 Then you need to attach IAM Policy to cross-account IAM Role or in-account IAM User.
@@ -20,7 +28,7 @@ The required IAM Policy (replace `<>` values):
     "Statement": [
         {
             "Effect": "Allow",
-            "Action": "eks:DescribeCluster",
+            "Action": ["eks:DescribeCluster", "eks:ListClusters"],
             "Resource": "arn:aws:eks:<AWS_REGION>:<AWS_ACCOUNT>:cluster/<EKS_NAME>"
         }
     ]

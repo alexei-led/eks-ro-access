@@ -1,0 +1,55 @@
+---
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >
+  "This Role grants DoiT International the ability to access the EKS cluster (read-only).
+   This Role does not allow DoiT International to access to other resources in the customer's account."
+Parameters:
+  TrustedAccount:
+    Type: Number
+    Description: DoiT International Account Id. Engineers will assume the IAM Role in your account from this AWS account.
+    MinValue: 100000000000
+    MaxValue: 999999999999
+    NoEcho: true
+  SupportRoleName:
+    Type: String
+    Description: EKS support role name
+    Default: DoitEKSSupportRole
+  ClusterRegion:
+    Type: String
+    Description: EKS cluster region
+    Default: !Ref "AWS::Region"
+  ClusterName:
+    Type: String
+    Description: EKS cluster name
+  
+Resources:
+  DoitSupportRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Ref SupportRoleName
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Effect: "Allow"
+          Principal:
+            AWS: !Ref TrustedAccount
+          Action:
+          - "sts:AssumeRole"
+          Condition:
+            BoolIfExists:
+              aws:MultiFactorAuthPresent: "true"
+      Policies:
+      - PolicyName: "EKS-Support-ReadOnly-Policy"
+        PolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+          - Sid: eks-access-cluster
+            Effect: Allow
+            Action: 
+            - eks:DescribeCluster,
+            - eks:ListClusters
+            Resource:  !Join [ "", "arn:aws:eks:", !Ref "ClusterRegion", ":", !Ref "AWS::AccountId", ":cluster/", !Ref "ClusterName" ]
+Outputs:
+  ConnectionURL:
+    Value: !Join [ "", ["https://signin.aws.amazon.com/switchrole?roleName=", !Ref "SupportRoleName" ,"=", !Ref "AWS::AccountId"]]
+    Description: External user cross-account access URL
