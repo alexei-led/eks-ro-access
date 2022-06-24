@@ -33,11 +33,11 @@ Resources:
             BoolIfExists:
               aws:MultiFactorAuthPresent: "true"
       Policies:
-      - PolicyName: "EKS-Support-ReadOnly-Policy"
+      - PolicyName: "EKSSupportReadOnly"
         PolicyDocument:
           Version: "2012-10-17"
           Statement:
-          - Sid: eks-access-cluster
+          - Sid: EKSAccessCluster
             Effect: Allow
             Action: 
             - eks:DescribeCluster,
