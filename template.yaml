@@ -12,10 +12,6 @@ Parameters:
     Type: String
     Description: EKS support role name
     Default: DoitEKSSupportRole
-  ClusterRegion:
-    Type: String
-    Description: EKS cluster region
-    Default: !Ref "AWS::Region"
   ClusterName:
     Type: String
     Description: EKS cluster name
@@ -46,7 +42,7 @@ Resources:
             Action: 
             - eks:DescribeCluster,
             - eks:ListClusters
-            Resource:  !Join [ "", "arn:aws:eks:", !Ref "ClusterRegion", ":", !Ref "AWS::AccountId", ":cluster/", !Ref "ClusterName" ]
+            Resource:  !Join [ "", ["arn:aws:eks:", !Ref "AWS::Region", ":", !Ref "AWS::AccountId", ":cluster/", !Ref "ClusterName"]]
 Outputs:
   ConnectionURL:
     Value: !Join [ "", ["https://signin.aws.amazon.com/switchrole?roleName=", !Ref "SupportRoleName" ,"=", !Ref "AWS::AccountId"]]
